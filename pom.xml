@@ -13,6 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.apache.flink.version>1.8.1</org.apache.flink.version>
+		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>
@@ -55,6 +56,21 @@
 	
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<!-- The semantics of this option are reversed, see MCOMPILER-209. -->
+					<useIncrementalCompilation>false</useIncrementalCompilation>
+					<compilerArgs>
+						<!-- Prevents recompilation due to missing package-info.class, see MCOMPILER-205 -->
+						<arg>-Xpkginfo:always</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
