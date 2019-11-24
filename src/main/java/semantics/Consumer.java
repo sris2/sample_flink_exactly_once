@@ -16,6 +16,7 @@ public class Consumer {
 	public void listenToDispatcher(StreamExecutionEnvironment env) {
 		Properties prop = new Properties();
 		prop.setProperty("bootstrap.servers", "localhost:9092");
+		prop.setProperty("transaction.timeout.ms", "60000");
 	    FlinkKafkaProducer<String> producer = Producer.createStringProducer( "test-producer", prop);
 	    FlinkKafkaConsumer<String> consumer =
                 new FlinkKafkaConsumer<String>("test-consumer", new KafkaCustom(),
